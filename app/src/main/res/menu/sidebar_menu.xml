@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single" android:id="@+id/sidebar_menu_group">
+        <item android:title="Main Menu" android:id="@+id/main_menu">
+            <item
+                android:title="@string/menu_home"
+                android:checked="true"
+                android:icon="@drawable/home"
+                android:id="@+id/drawer_home" />
+            <item
+                android:title="@string/menu_pasta_and_pizza"
+                android:icon="@drawable/pasta_and_pizza"
+                android:id="@+id/drawer_pasta_and_pizza" />
+            <item
+                android:title="@string/menu_speciality_food"
+                android:icon="@drawable/speciality_food"
+                android:id="@+id/drawer_speciality_food" />
+            <item
+                android:title="@string/menu_traditional_food"
+                android:icon="@drawable/traditional_food"
+                android:id="@+id/drawer_traditional_food" />
+        </item>
+        <item android:title="Additional Menu" android:id="@+id/add_menu">
+            <item
+                android:title="@string/menu_my_favorite"
+                android:icon="@drawable/my_favorites"
+                android:id="@+id/drawer_my_favorite" />
+            <item
+                android:title="@string/menu_discover"
+                android:icon="@drawable/discover"
+                android:id="@+id/drawer_discover" />
+        </item>
+    </group>
+</menu>

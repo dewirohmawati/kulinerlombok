@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
 //        toolbar.setNavigationIcon(R.drawable.ic_drawer);
 
