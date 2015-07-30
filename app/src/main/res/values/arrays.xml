@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="sidebar_menu">
+        <item>Home</item>
+        <item>Pasta and Pizza</item>
+        <item>Speciality Food</item>
+        <item>Traditional Food</item>
+        <item>My Favorites</item>
+        <item>Discover</item>
+        <item>Settings</item>
+        <item>About Us</item>
+    </array>
+</resources>

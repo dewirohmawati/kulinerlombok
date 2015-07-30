@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:orientation="vertical"
+    android:paddingBottom="0dp"
+    tools:context=".MainActivity">
+
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- custom toolbar -->
+            <include layout="@layout/toolbar"/>
+
+            <FrameLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <!-- Left menu container -->
+        <LinearLayout
+            android:id="@+id/side_menu_container"
+            android:layout_gravity="start"
+            android:layout_width="@dimen/sidebar_width"
+            android:background="#FFF"
+            android:orientation="vertical"
+            android:layout_height="fill_parent">
+
+            <include layout="@layout/sidebar_header"/>
+            <include layout="@layout/sidebar_body" />
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>
