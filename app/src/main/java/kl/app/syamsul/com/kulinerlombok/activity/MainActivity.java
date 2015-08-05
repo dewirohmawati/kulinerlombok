@@ -1,7 +1,13 @@
 package kl.app.syamsul.com.kulinerlombok.activity;
 
+import android.content.res.Configuration;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,60 +17,40 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import kl.app.syamsul.com.kulinerlombok.R;
-import kl.app.syamsul.com.kulinerlombok.adapter.SideMenuAdapter;
-import kl.app.syamsul.com.kulinerlombok.model.SideMenuModel;
+import kl.app.syamsul.com.kulinerlombok.fragment.CardFragment;
 
 
 public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private DrawerLayout mDrawerLayout;
-    private ListView mSidebarMenu;
     private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationView mNavigationView;
+    private ActionBar mActionBar;
+    private Toolbar mToolbar;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(toolbar);
+        initToolbar();
+        initDrawer();
+        initNavigation();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        if(savedInstanceState == null) {
+            Fragment fragment = CardFragment.newInstance(null, null);
 
-//        toolbar.setNavigationIcon(R.drawable.ic_drawer);
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.app_name,R.string.app_name);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        String[] sidebarMenuText = getResources().getStringArray(R.array.sidebar_menu);
-        int[] sidebarMenuIcon = new int[]{
-                R.drawable.home,
-                R.drawable.pasta_and_pizza,
-                R.drawable.speciality_food,
-                R.drawable.traditional_food,
-                R.drawable.my_favorites,
-                R.drawable.discover,
-                R.drawable.settings,
-                R.drawable.about_us
-        };
-
-        List<SideMenuModel> sidebarMenu = new ArrayList<>();
-
-        for(int i = 0; i < sidebarMenuText.length; i++){
-            sidebarMenu.add(new SideMenuModel(sidebarMenuIcon[i],sidebarMenuText[i]));
+            ft.add(R.id.main_content, fragment).commit();
         }
-
-        mSidebarMenu = (ListView) findViewById(R.id.sidebar_menu_list);
-        mSidebarMenu.setOnItemClickListener(this);
-        mSidebarMenu.setAdapter(new SideMenuAdapter(this, sidebarMenu));
-
     }
 
     @Override
@@ -75,21 +61,83 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        return (mDrawerToggle.onOptionsItemSelected(item)) ? true : super.onOptionsItemSelected(item);
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
 
-        return super.onOptionsItemSelected(item);
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+
         mDrawerLayout.closeDrawers();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mNavigationView.isShown()){
+            mDrawerLayout.closeDrawers();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void initToolbar(){
+        mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(mToolbar);
+
+        mActionBar = getSupportActionBar();
+
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
+    }
+
+    private void initDrawer(){
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+
+            public void onDrawerClosed(View view){
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View view){
+                super.onDrawerOpened(view);
+                invalidateOptionsMenu();
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    private void initNavigation(){
+        mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                if(menuItem.getItemId() == R.id.drawer_home){
+                    mActionBar.setTitle(R.string.app_name);
+                } else {
+                    mActionBar.setTitle(menuItem.getTitle());
+                }
+
+                menuItem.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 }
