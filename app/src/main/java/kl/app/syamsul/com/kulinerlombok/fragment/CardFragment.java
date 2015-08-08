@@ -1,8 +1,9 @@
 package kl.app.syamsul.com.kulinerlombok.fragment;
 
-import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,13 +17,15 @@ import kl.app.syamsul.com.kulinerlombok.R;
 import kl.app.syamsul.com.kulinerlombok.adapter.CardAdapter;
 import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
 
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment  {
 
     private List<StoreModel> stores;
     private RecyclerView mRecycler;
     private CardAdapter mAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
 
-    public static CardFragment newInstance(String param1, String param2) {
+    public static CardFragment newInstance() {
 
         CardFragment fragment = new CardFragment();
         return fragment;
@@ -41,9 +44,9 @@ public class CardFragment extends Fragment {
         };
         String[] al = new String[]{
                 "Jl. Pejanggik Selong Lombok Timur",
+                "Jl. Pejanggik Sweta Mataram",
                 "Tanaq Maiq Masbagik Lombok Timur",
-                "Jl Raya Lb. Lombok - Mataram Lombok Timur",
-                "Jl. Pejanggik Sweta Mataram"
+                "Jl Raya Lb. Lombok - Mataram Lombok Timur"
         };
 
         int[] rt = new int[]{3,5,4,5};
@@ -63,22 +66,40 @@ public class CardFragment extends Fragment {
             stores.add(s);
         }
 
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        gridLayoutManager = new GridLayoutManager(getActivity(),2);
 
+        // layout Recycler view hanya bersifat sebagai container dari
+        // layout card adapter sehingga tidak perlu menggunakan layout XML
+        // cukup dengan melakukan instansiasi class RecyclerView saja
+        mRecycler = new RecyclerView(getActivity());
+        mAdapter = new CardAdapter(getActivity(), stores);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            mRecycler.setLayoutManager(gridLayoutManager);
+        } else {
+            mRecycler.setLayoutManager(linearLayoutManager);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_card, container, false);
-        mRecycler = (RecyclerView) v.findViewById(R.id.my_recycler_view);
-        mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        mAdapter = new CardAdapter(getActivity(), stores);
+        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            mRecycler.setLayoutManager(gridLayoutManager);
+        } else {
+            mRecycler.setLayoutManager(linearLayoutManager);
+        }
 
         mRecycler.setAdapter(mAdapter);
 
-        return v;
+        return mRecycler;
     }
 
 }

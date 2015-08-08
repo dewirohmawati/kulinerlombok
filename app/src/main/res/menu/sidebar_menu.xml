@@ -20,8 +20,6 @@
                 android:title="@string/menu_traditional_food"
                 android:icon="@drawable/traditional_food"
                 android:id="@+id/drawer_traditional_food" />
-        </item>
-        <item android:title="Additional Menu" android:id="@+id/add_menu">
             <item
                 android:title="@string/menu_my_favorite"
                 android:icon="@drawable/my_favorites"
@@ -30,6 +28,14 @@
                 android:title="@string/menu_discover"
                 android:icon="@drawable/discover"
                 android:id="@+id/drawer_discover" />
+            <item
+                android:title="@string/menu_setting"
+                android:icon="@drawable/settings"
+                android:id="@+id/drawer_settings" />
+            <item
+                android:title="@string/menu_about_us"
+                android:icon="@drawable/about_us"
+                android:id="@+id/drawer_about_us" />
         </item>
     </group>
 </menu>

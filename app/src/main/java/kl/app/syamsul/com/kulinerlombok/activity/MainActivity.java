@@ -1,99 +1,50 @@
 package kl.app.syamsul.com.kulinerlombok.activity;
 
-import android.content.res.Configuration;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.os.Bundle;
+import android.graphics.Point;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import kl.app.syamsul.com.kulinerlombok.R;
-import kl.app.syamsul.com.kulinerlombok.fragment.CardFragment;
 
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener {
+    protected Toolbar mToolbar;
+    protected ActionBar mActionBar;
 
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private NavigationView mNavigationView;
-    private ActionBar mActionBar;
-    private Toolbar mToolbar;
+    private int screenWidth;
+    private int screenHeight;
+    private int layout;
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
+    public MainActivity(int layout){
+        this.layout = layout;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(layout);
         initToolbar();
-        initDrawer();
-        initNavigation();
 
-        if(savedInstanceState == null) {
-            Fragment fragment = CardFragment.newInstance(null, null);
-
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-
-            ft.add(R.id.main_content, fragment).commit();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        computerScreenSize();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return (mDrawerToggle.onOptionsItemSelected(item)) ? true : super.onOptionsItemSelected(item);
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
-
-        mDrawerLayout.closeDrawers();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(mNavigationView.isShown()){
-            mDrawerLayout.closeDrawers();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    private void initToolbar(){
+    protected void initToolbar(){
         mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mToolbar);
 
@@ -103,41 +54,17 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         mActionBar.setHomeButtonEnabled(true);
     }
 
-    private void initDrawer(){
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    private void computerScreenSize(){
+        Display d = getWindowManager().getDefaultDisplay();
+        DisplayMetrics metrics = new DisplayMetrics();
 
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+        d.getMetrics(metrics);
 
-            public void onDrawerClosed(View view){
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View view){
-                super.onDrawerOpened(view);
-                invalidateOptionsMenu();
-            }
-        };
-
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        this.screenHeight = metrics.heightPixels;
+        this.screenWidth = metrics.widthPixels;
     }
 
-    private void initNavigation(){
-        mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                if(menuItem.getItemId() == R.id.drawer_home){
-                    mActionBar.setTitle(R.string.app_name);
-                } else {
-                    mActionBar.setTitle(menuItem.getTitle());
-                }
-
-                menuItem.setChecked(true);
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
+    public int[] getScreenSize(){
+        return new int[]{this.screenWidth,this.screenHeight};
     }
 }

@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="kl.app.syamsul.com.kulinerlombok.activity.DetailActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_share"
         android:title=""
-        android:icon="@drawable/star"
+        android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
         android:orderInCategory="100"
         app:showAsAction="always" />
 </menu>

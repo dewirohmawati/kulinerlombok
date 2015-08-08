@@ -1,30 +1,44 @@
 package kl.app.syamsul.com.kulinerlombok.activity;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import kl.app.syamsul.com.kulinerlombok.R;
+import kl.app.syamsul.com.kulinerlombok.fragment.DetailFragment;
+import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    public static final String BUNDLE_STRORE_DATA = "store_data";
+
+    public Toolbar mToolbar;
+    public  ActionBar mActionBar;
+    private StoreModel store;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        store = (StoreModel) getIntent().getSerializableExtra(BUNDLE_STRORE_DATA);
         setContentView(R.layout.activity_detail);
 
+        setTitle(null);
         mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        mToolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
         setSupportActionBar(mToolbar);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        mActionBar = getSupportActionBar();
+
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
+
+        if(savedInstanceState == null){
+            Fragment f = DetailFragment.newInstance(store);
+            getSupportFragmentManager().beginTransaction().add(R.id.detail_container, f).commit();
+        }
 
     }
 
@@ -33,20 +47,5 @@ public class DetailActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_detail, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
