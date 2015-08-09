@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import kl.app.syamsul.com.kulinerlombok.R;
 import kl.app.syamsul.com.kulinerlombok.fragment.DetailFragment;
@@ -13,7 +14,7 @@ import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
 
 public class DetailActivity extends AppCompatActivity {
 
-    public static final String BUNDLE_STRORE_DATA = "store_data";
+    public static final String BUNDLE_STORE_DATA = "store_data";
 
     public Toolbar mToolbar;
     public  ActionBar mActionBar;
@@ -23,7 +24,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        store = (StoreModel) getIntent().getSerializableExtra(BUNDLE_STRORE_DATA);
+        store = (StoreModel) getIntent().getSerializableExtra(BUNDLE_STORE_DATA);
         setContentView(R.layout.activity_detail);
 
         setTitle(null);
@@ -46,6 +47,14 @@ public class DetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_share){
+
+        }
         return true;
     }
 }

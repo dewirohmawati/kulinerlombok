@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Kuliner Lombok</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name" translatable="false">Kuliner Lombok</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_pasta_and_pizza">Pasta and Pizza</string>
@@ -10,6 +9,19 @@
     <string name="menu_discover">Discover</string>
     <string name="menu_setting">Settings</string>
     <string name="menu_about_us">About Us</string>
+
+    <string name="menu_store_item_share">Bagikan</string>
+    <string name="menu_store_item_vote">Vote</string>
+    <string name="menu_store_item_checkin">Checkin</string>
+
+    <string name="rating_item_service">Pelayanan</string>
+    <string name="rating_item_taste">Citarasa</string>
+    <string name="rating_item_cleanness">Kebersihan</string>
+    <string name="rating_item_comfort">Kenyamanan</string>
+
+    <string name="operation_time">Jam Buka</string>
+    <string name="rating_price_range">Rentang Harga</string>
+    <string name="rating_favorite_menu">Menu Favorit</string>
 
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. \n\nUt enim ad minim veniam,

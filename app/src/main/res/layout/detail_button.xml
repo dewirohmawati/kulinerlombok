@@ -10,6 +10,7 @@
     android:layout_height="wrap_content">
 
     <ImageButton
+        android:id="@+id/detail_button_phone"
         android:src="@drawable/phone"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -20,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageButton
+        android:id="@+id/detail_button_map"
         android:src="@drawable/map"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -29,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageButton
+        android:id="@+id/detail_button_website"
         android:src="@drawable/website"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -38,7 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageButton
-        android:src="@drawable/operation_time"
+        android:id="@+id/detail_button_vote"
+        android:src="@drawable/vote"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingEnd="5dp"
@@ -47,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageButton
+        android:id="@+id/detail_button_comments"
         android:src="@drawable/comments"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -56,5 +61,4 @@
         android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

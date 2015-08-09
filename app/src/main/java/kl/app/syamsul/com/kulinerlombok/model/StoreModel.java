@@ -5,7 +5,9 @@ package kl.app.syamsul.com.kulinerlombok.model;
  */
         import java.io.Serializable;
         import java.util.ArrayList;
+        import java.util.HashMap;
         import java.util.List;
+        import java.util.Map;
 
         import org.json.JSONArray;
         import org.json.JSONException;
@@ -17,6 +19,21 @@ package kl.app.syamsul.com.kulinerlombok.model;
 
 public class StoreModel implements Serializable {
 
+    public static final String KEY_RATING_SERVICE = "service";
+    public static final String KEY_RATING_COMFORT = "comfortably";
+    public static final String KEY_RATING_CLEANNESS = "cleanness";
+    public static final String KEY_RATING_TASTE = "taste";
+    public static final String KEY_RATING_OVERALL = "overall";
+
+    public static final String KEY_OPERATION_TIME_START = "start";
+    public static final String KEY_OPERATION_TIME_END = "end";
+
+    public static final String KEY_LOCATION_LATITUDE = "lat";
+    public static final String KEY_LOCATION_LONGITUDE = "lng";
+
+    public static final String KEY_PHOTO_URL = "url";
+    public static final String KEY_PHOTO_DESCRIPTION = "description";
+
     /**
      *
      */
@@ -24,6 +41,12 @@ public class StoreModel implements Serializable {
 
     @JsonProperty("_id")
     String _id;
+
+    @JsonProperty("price_range")
+    String priceRange;
+
+    @JsonProperty("favorite_menu")
+    String favoriteMenu;
 
     @JsonProperty("telp")
     String telp;
@@ -43,31 +66,38 @@ public class StoreModel implements Serializable {
     @JsonProperty("description")
     String description;
 
-    @JsonProperty("lattitude")
-    double lattitude;
-
-    @JsonProperty("longitude")
-    double longitude;
+    @JsonProperty("location")
+    Map<String,Long> location = new HashMap<>();
 
     @JsonProperty("sticky")
     boolean sticky;
 
+    /**
+     * Rating terdiri dari
+     * {cleanness:int,service:int,comfort:int,taste:int,overall:int}
+     */
     @JsonProperty("rating")
-    int rating;
+    Map<String,Integer> rating = new HashMap<>();
 
-    @JsonProperty("numComments")
-    int numComments;
+    @JsonProperty("comments_count")
+    int commentsCount;
 
-    @JsonProperty("operation_time_start")
-    String operation_time_start;
+    /**
+     * Terdiri dari: {start:string,end:string}
+     */
+    @JsonProperty("operation_time")
+    Map<String,String> operationTime = new HashMap<>();
 
-    @JsonProperty("operation_time_end")
-    String operation_time_end;
-
+    /**
+     * format json foto adalah array berisi objek
+     * yang terdiri dari url dan description
+     * [
+     *  {url:http://photo.kulinerlombok.com/,description:"bla bla bla"},
+     *  {url:http://photo.kulinerlombok.com/,description:"bla bla bla"}
+     * ]
+     */
     @JsonProperty("photos")
-    List<String> photos = new ArrayList<String>();
-
-    int p;
+    List<Map<String,String>> photos = new ArrayList<>();
 
     public StoreModel(){}
 
@@ -76,6 +106,13 @@ public class StoreModel implements Serializable {
         if(o.has("_id")){
             setId(o.getString("_id"));
         }
+        if(o.has("price_range")){
+            setId(o.getString("price_range"));
+        }
+        if(o.has("favorite_menu")){
+            setId(o.getString("favorite_menu"));
+        }
+
         if(o.has("name")){
             setName(o.getString("name"));
         }
@@ -91,33 +128,45 @@ public class StoreModel implements Serializable {
         if(o.has("address")){
             setAddress(o.getString("address"));
         }
-        if(o.has("rating")){
-            setRating(o.getInt("rating"));
-        }
         if(o.has("description")){
             setDescription(o.getString("description"));
-        }
-        if(o.has("lattitude")){
-            setLattitude(o.getDouble("lattitude"));
-        }
-        if(o.has("longitude")){
-            setLongitude(o.getDouble("longitude"));
         }
         if(o.has("sticky")){
             setSticky(o.getBoolean("sticky"));
         }
-        if(o.has("operationTimeStart")){
-            setOperationTimeStart(o.getString("operationTimeStart"));
+        if(o.has("comments_count")){
+            setCommentsCount(o.getInt("comments_count"));
         }
-        if(o.has("operationTimeEnd")){
-            setOperationTimeEnd(o.getString("operationTimeEnd"));
+
+        if(o.has("location")){
+            try {
+                JSONObject location = o.getJSONObject("location");
+                setLocation(location);
+            } catch (JSONException e){
+
+            }
         }
-        if(o.has("numComments")){
-            setNumComments(o.getInt("numComments"));
+
+        if(o.has("operation_time")){
+            try {
+                JSONObject operationTime = o.getJSONObject("operation_time");
+                setOperationTime(operationTime);
+            } catch (JSONException e){
+
+            }
         }
+
+        if(o.has("rating")){
+            try {
+                JSONObject rating = o.getJSONObject("rating");
+                setRating(rating);
+            } catch (JSONException e){
+
+            }
+        }
+
         if(o.has("photos")){
             try{
-                o.getJSONArray("photos");
                 setPhotos(o.getJSONArray("photos"));
             } catch (JSONException e){
 
@@ -125,144 +174,125 @@ public class StoreModel implements Serializable {
         }
     }
 
-    public void setP(int l){
-        this.p = l;
-    }
-
-    public int getP(){
-        return this.p;
-    }
-
-    public void setPhotos(JSONArray photos) throws JSONException{
-        if(photos.length() > 0){
-            for (int i = 0; i < photos.length(); i++) {
-                this.photos.add(photos.getString(i));
-            }
-        }
-    }
-
-    public void setPhotos(String[] photos){
-        if(photos.length > 0){
-            for (int i = 0; i < photos.length; i++) {
-                this.photos.add(photos[i]);
-            }
-        }
-    }
-
-    public void setPhotos(String photo){
-        this.photos.add(photo);
-    }
-
-    public List<String> getPhotos() {
-        return this.photos;
-    }
-
-    public int getNumComments(){
-        return numComments;
-    }
-
-    public void setNumComments(int num){
-        this.numComments = num;
-    }
-
-    public void setOperationTimeStart(String op_start){
-        this.operation_time_start = TimeFormatter.twoDigitFormat(op_start);
-    }
-
-    public String getOperationTimeStart(){
-        return this.operation_time_start;
-    }
-
-    public void setOperationTimeEnd(String op_end){
-        this.operation_time_end = TimeFormatter.twoDigitFormat(op_end);
-    }
-
-    public String getOperationTimeEnd(){
-        return this.operation_time_end;
+    public void setSticky(boolean sticky){
+        this.sticky = sticky;
     }
 
     public void setId(String id){
         this._id = id;
     }
 
-    public String getId(){
-        return _id;
-    }
-
     public void setName(String name){
         this.name = name;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public void setCategory(String category){
-        this.category = category;
-    }
-
-    public String getCategory(){
-        return category;
     }
 
     public void setAddress(String address){
         this.address = address;
     }
 
-    public String getAddress(){
-        return address;
-    }
-
     public void setDescription(String desc){
         this.description = desc;
     }
 
-    public String getDescription(){
-        return description;
+    public void setCategory(String category){
+        this.category = category;
     }
 
-    public void setLattitude(double lat){
-        this.lattitude = lat;
+    public void setPhotos(JSONArray p) throws JSONException{
+        for (int i=0; i<p.length();i++){
+
+            Map<String,String> photoItem = new HashMap<>();
+            JSONObject item = p.getJSONObject(i);
+
+            photoItem.put(KEY_PHOTO_URL,String.valueOf(item.get(KEY_PHOTO_URL)));
+            photoItem.put(KEY_PHOTO_DESCRIPTION,String.valueOf(item.get(KEY_PHOTO_DESCRIPTION)));
+            photos.add(photoItem);
+        }
     }
 
-    public double getLattitude(){
-        return lattitude;
+    public void setPhotos(JSONObject photo) throws JSONException {
+        Map<String,String> item = new HashMap<>();
+        item.put(KEY_PHOTO_URL,String.valueOf(photo.get(KEY_PHOTO_URL)));
+        item.put(KEY_PHOTO_DESCRIPTION,String.valueOf(photo.get(KEY_PHOTO_DESCRIPTION)));
+        photos.add(item);
     }
 
-    public void setLongitude(double lon){
-        this.longitude = lon;
+    public void setLocation(JSONObject location) throws JSONException {
+        this.location.put(KEY_LOCATION_LATITUDE, (Long) location.get(KEY_LOCATION_LATITUDE));
+        this.location.put(KEY_LOCATION_LONGITUDE, (Long) location.get(KEY_LOCATION_LONGITUDE));
     }
 
-    public double getLongitude(){
-        return longitude;
+    public void setOperationTime(JSONObject operationTime) throws JSONException {
+        this.operationTime.put(KEY_OPERATION_TIME_START, String.valueOf(operationTime.get(KEY_OPERATION_TIME_START)));
+        this.operationTime.put(KEY_OPERATION_TIME_END, String.valueOf(operationTime.get(KEY_OPERATION_TIME_END)));
     }
 
-    public void setSticky(boolean sticky){
-        this.sticky = sticky;
+    public void setCommentsCount(int num){
+        this.commentsCount = num;
     }
 
-    public boolean getSticky(){
-        return sticky;
-    }
-
-    public int getRating(){
-        return rating;
-    }
-
-    public void setRating(int rating){
-        this.rating = rating;
+    public void setRating(JSONObject rating) throws JSONException {
+        this.rating.put(KEY_RATING_CLEANNESS, (Integer) rating.get(KEY_RATING_CLEANNESS));
+        this.rating.put(KEY_RATING_COMFORT, (Integer) rating.get(KEY_RATING_COMFORT));
+        this.rating.put(KEY_RATING_TASTE, (Integer) rating.get(KEY_RATING_TASTE));
+        this.rating.put(KEY_RATING_SERVICE, (Integer) rating.get(KEY_RATING_SERVICE));
+        this.rating.put(KEY_RATING_OVERALL, (Integer) rating.get(KEY_RATING_OVERALL));
     }
 
     public void setWebsite(String website){
         this.website = website;
     }
 
-    public String getWebsite(){
-        return this.website;
-    }
-
     public void setTelp(String telp){
         this.telp = telp;
+    }
+
+    public List<Map<String,String>> getPhotos() {
+        return this.photos;
+    }
+
+    public int getCommentsCount(){
+        return commentsCount;
+    }
+
+    public Map<String,String> getOperationTime(){
+        return operationTime;
+    }
+
+    public String getId(){
+        return _id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getCategory(){
+        return category;
+    }
+
+    public String getAddress(){
+        return address;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public Map<String,Long> getLocation(){
+        return location;
+    }
+
+    public boolean getSticky(){
+        return sticky;
+    }
+
+    public Map<String,Integer> getRating(){
+        return rating;
+    }
+
+    public String getWebsite(){
+        return this.website;
     }
 
     public String getTelp(){

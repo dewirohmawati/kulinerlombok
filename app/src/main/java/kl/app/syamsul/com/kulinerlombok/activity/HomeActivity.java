@@ -1,5 +1,6 @@
 package kl.app.syamsul.com.kulinerlombok.activity;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
@@ -10,8 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,24 +21,24 @@ import android.widget.ListView;
 import kl.app.syamsul.com.kulinerlombok.R;
 import kl.app.syamsul.com.kulinerlombok.adapter.CardAdapter;
 import kl.app.syamsul.com.kulinerlombok.fragment.CardFragment;
-import kl.app.syamsul.com.kulinerlombok.fragment.DetailFragment;
 import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
 
 
-public class HomeActivity extends MainActivity implements ListView.OnItemClickListener, CardAdapter.RecyclerAdapterListener {
+public class HomeActivity extends AppCompatActivity implements ListView.OnItemClickListener, CardAdapter.RecyclerAdapterListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView mNavigationView;
-
-    public HomeActivity(){
-        super(R.layout.activity_home);
-    }
+    private Toolbar mToolbar;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_home);
+
+        initToolbar();
         initDrawer();
         initNavigation();
 
@@ -49,6 +50,12 @@ public class HomeActivity extends MainActivity implements ListView.OnItemClickLi
 
             ft.add(R.id.main_content, fragment).commit();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.theme_color));
     }
 
     @Override
@@ -81,6 +88,16 @@ public class HomeActivity extends MainActivity implements ListView.OnItemClickLi
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void initToolbar(){
+        mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(mToolbar);
+
+        mActionBar = getSupportActionBar();
+
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
     }
 
     private void initDrawer(){
@@ -124,12 +141,13 @@ public class HomeActivity extends MainActivity implements ListView.OnItemClickLi
     @Override
     public void onRecyclerItemSelected(StoreModel data) {
 
-        Intent det = new Intent(this,DetailActivity.class);
-        det.putExtra(DetailActivity.BUNDLE_STRORE_DATA, data);
-        startActivity(det);
-//        Fragment f = DetailFragment.newInstance(data);
-//        FragmentManager fm = getSupportFragmentManager();
-//
-//        fm.beginTransaction().replace(R.id.main_content,f).addToBackStack("card fragment").commit();
+        Intent detailActivity = new Intent(this,DetailActivity.class);
+        detailActivity.putExtra(DetailActivity.BUNDLE_STORE_DATA, data);
+        startActivity(detailActivity);
+    }
+
+    @Override
+    public void onRecyclerItemMenuSelected(StoreModel data) {
+
     }
 }

@@ -1,9 +1,7 @@
 package kl.app.syamsul.com.kulinerlombok.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import com.squareup.picasso.Picasso;
 
-import kl.app.syamsul.com.kulinerlombok.fragment.DetailFragment;
+import java.util.List;
+import java.util.Map;
+
 import kl.app.syamsul.com.kulinerlombok.R;
-import kl.app.syamsul.com.kulinerlombok.activity.DetailActivity;
 import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> implements View.OnClickListener {
@@ -29,7 +28,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
      * Created by syamsul on 01/08/15.
      */
     private List<StoreModel> stores;
-    private int selectedItemPosition;
     private Activity mActivity;
     private RecyclerAdapterListener listener;
 
@@ -44,7 +42,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public LinearLayout container;
+        public CardView container;
         public LinearLayout ratingContainer;
         public TextView storeName;
         public TextView storeAddress;
@@ -57,7 +55,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
 
             itemButton = (ImageButton) itemView.findViewById(R.id.card_item_button);
             imageFrame = (FrameLayout) itemView.findViewById(R.id.card_view_image_frame);
-            container = (LinearLayout) itemView.findViewById(R.id.card_adapter_container);
+            container = (CardView) itemView.findViewById(R.id.card_view);
             ratingContainer = (LinearLayout) itemView.findViewById(R.id.rating_container);
             storeName = (TextView) itemView.findViewById(R.id.store_name);
             storeAddress = (TextView) itemView.findViewById(R.id.store_address);
@@ -90,11 +88,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
 
         final StoreModel store = stores.get(position);
 
-        createRating(holder,store.getRating());
+        int overallRating = store.getRating().get(StoreModel.KEY_RATING_OVERALL);
+        createRating(holder, overallRating);
 
         holder.storeAddress.setText(store.getAddress());
         holder.storeName.setText(store.getName());
-        holder.storeImage.setImageResource(store.getP());
+
+        Map<String,String> photo = store.getPhotos().get(0);
+
+        Picasso.with(mActivity)
+                .load(Integer.parseInt(photo.get(StoreModel.KEY_PHOTO_URL)))
+                .resize(300, 250)
+                .into(holder.storeImage);
 
         holder.container.setAnimation(AnimationUtils.loadAnimation(mActivity, R.anim.zoom_in));
         holder.imageFrame.setOnClickListener(new View.OnClickListener() {
@@ -111,23 +116,39 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
         return stores.size();
     }
 
-    private void createRating(ViewHolder holder, int rating){
+    private void createRating(ViewHolder holder, int overallRating){
+
         holder.ratingContainer.removeAllViews();
+        int layout;
 
-        for (int i = 0; i < 5; i++){
-
-            ImageView img = new ImageView(mActivity);
-
-            if(i < rating){
-                img.setImageResource(R.drawable.star);
-            } else {
-                img.setImageResource(R.drawable.star_none);
-            }
-            holder.ratingContainer.addView(img);
+        switch (overallRating){
+            case 1:
+                layout = R.layout.rating_one;
+                break;
+            case 2:
+                layout = R.layout.rating_two;
+                break;
+            case 3:
+                layout = R.layout.rating_three;
+                break;
+            case 4:
+                layout = R.layout.rating_four;
+                break;
+            case 5:
+                layout = R.layout.rating_five;
+                break;
+            default:
+                layout = R.layout.rating_zero;
+                break;
         }
+
+        View rating = LayoutInflater.from(mActivity).inflate(layout,null);
+
+        holder.ratingContainer.addView(rating);
     }
 
     public interface RecyclerAdapterListener{
         void onRecyclerItemSelected(StoreModel data);
+        void onRecyclerItemMenuSelected(StoreModel data);
     }
 }
