@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -101,7 +102,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                 .resize(300, 250)
                 .into(holder.storeImage);
 
-        holder.container.setAnimation(AnimationUtils.loadAnimation(mActivity, R.anim.slide_up));
+        Animation anim = AnimationUtils.loadAnimation(mActivity, R.anim.slide_up);
+        anim.setInterpolator(mActivity,android.R.interpolator.decelerate_cubic);
+
+        holder.container.setAnimation(anim);
         holder.imageFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
