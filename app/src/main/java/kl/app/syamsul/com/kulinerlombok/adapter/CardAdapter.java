@@ -101,7 +101,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                 .resize(300, 250)
                 .into(holder.storeImage);
 
-        holder.container.setAnimation(AnimationUtils.loadAnimation(mActivity, R.anim.zoom_in));
+        holder.container.setAnimation(AnimationUtils.loadAnimation(mActivity, R.anim.slide_up));
         holder.imageFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

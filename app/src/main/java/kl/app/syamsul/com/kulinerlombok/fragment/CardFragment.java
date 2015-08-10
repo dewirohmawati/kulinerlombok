@@ -88,8 +88,18 @@ public class CardFragment extends Fragment  {
         int[][] rt = new int[][]{{3,5,4,5,4},{3,5,4,2,3},{5,3,4,1,3},{1,5,4,2,3}};
         int[] comment = new int[]{5,46,0,10};
 
-        int[] pt = new int[]{R.drawable.warung_kelor, R.drawable.lesehan_purnama, R.drawable.lesehan_burdah, R.drawable.ayam_taliwang};
-        String[] pdesc = new String[]{"Menu andalan warung kelor nih...","Ikan bakar sambal colek","Ikan bakar khas burdah","Ayam bakar khas taliwang purnama"};
+        int[][] pt = new int[][]{
+                {R.drawable.warung_kelor, R.drawable.lesehan_purnama, R.drawable.lesehan_burdah, R.drawable.ayam_taliwang},
+                {R.drawable.lesehan_purnama, R.drawable.warung_kelor, R.drawable.ayam_taliwang,R.drawable.lesehan_burdah },
+                {R.drawable.ayam_taliwang,R.drawable.lesehan_burdah, R.drawable.warung_kelor,  R.drawable.lesehan_purnama },
+                {R.drawable.lesehan_burdah, R.drawable.ayam_taliwang,R.drawable.lesehan_purnama, R.drawable.warung_kelor }
+        };
+        String[][] pdesc = new String[][]{
+                {"Menu andalan warung kelor nih...","Ikan bakar sambal colek","Ikan bakar khas burdah","Ayam bakar khas taliwang purnama"},
+                {"Menu lainnya nih bro","lainnya jjuga","bla bla bla","mbuh lah ya", "aku nggak ngerti"},
+                {"Menu lainnya nih bro","lainnya jjuga","bla bla bla","mbuh lah ya", "aku nggak ngerti"},
+                {"Menu lainnya nih bro","lainnya jjuga","bla bla bla","mbuh lah ya", "aku nggak ngerti"}
+        };
 
         for(int i = 0; i < 4; i++){
             StoreModel s = new StoreModel();
@@ -99,9 +109,11 @@ public class CardFragment extends Fragment  {
 
             JSONObject p = new JSONObject();
             try {
-                p.put(StoreModel.KEY_PHOTO_URL,String.valueOf(pt[i]));
-                p.put(StoreModel.KEY_PHOTO_DESCRIPTION,pdesc[i]);
-                s.setPhotos(p);
+                for(int z=0;z<4;z++) {
+                    p.put(StoreModel.KEY_PHOTO_URL, String.valueOf(pt[i][z]));
+                    p.put(StoreModel.KEY_PHOTO_DESCRIPTION, pdesc[i][z]);
+                    s.setPhotos(p);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
