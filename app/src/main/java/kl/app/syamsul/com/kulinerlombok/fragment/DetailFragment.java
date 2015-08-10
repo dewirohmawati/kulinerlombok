@@ -1,6 +1,7 @@
 package kl.app.syamsul.com.kulinerlombok.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -20,10 +21,11 @@ import java.util.Map;
 
 import kl.app.syamsul.com.kulinerlombok.R;
 import kl.app.syamsul.com.kulinerlombok.activity.DetailActivity;
+import kl.app.syamsul.com.kulinerlombok.activity.GalleryActivity;
 import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
 
 
-public class DetailFragment extends Fragment implements OnScrollChangedCallback {
+public class DetailFragment extends Fragment implements OnScrollChangedCallback, View.OnClickListener {
 
     public static final String ARG_STORE_DATA = "store";
 
@@ -63,6 +65,8 @@ public class DetailFragment extends Fragment implements OnScrollChangedCallback 
                 .resize(800, 500)
                 .into(holder.storeImage);
 
+        holder.storeImage.setOnClickListener(this);
+
         holder.storeName.setText(store.getName());
         holder.storeAddress.setText(store.getAddress());
 
@@ -91,6 +95,13 @@ public class DetailFragment extends Fragment implements OnScrollChangedCallback 
         if (getArguments() != null) {
             store = (StoreModel) getArguments().getSerializable(ARG_STORE_DATA);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent in = new Intent(getActivity(),GalleryActivity.class);
+        in.putExtra(GalleryActivity.GALLERY_ACTIVITY_DATA,store);
+        startActivity(in);
     }
 
     private class Holder {

@@ -67,7 +67,7 @@ public class StoreModel implements Serializable {
     String description;
 
     @JsonProperty("location")
-    Map<String,Long> location = new HashMap<>();
+    HashMap<String,Long> location = new HashMap<>();
 
     @JsonProperty("sticky")
     boolean sticky;
@@ -77,7 +77,7 @@ public class StoreModel implements Serializable {
      * {cleanness:int,service:int,comfort:int,taste:int,overall:int}
      */
     @JsonProperty("rating")
-    Map<String,Integer> rating = new HashMap<>();
+    HashMap<String,Integer> rating = new HashMap<>();
 
     @JsonProperty("comments_count")
     int commentsCount;
@@ -86,7 +86,7 @@ public class StoreModel implements Serializable {
      * Terdiri dari: {start:string,end:string}
      */
     @JsonProperty("operation_time")
-    Map<String,String> operationTime = new HashMap<>();
+    HashMap<String,String> operationTime = new HashMap<>();
 
     /**
      * format json foto adalah array berisi objek
@@ -97,7 +97,7 @@ public class StoreModel implements Serializable {
      * ]
      */
     @JsonProperty("photos")
-    List<Map<String,String>> photos = new ArrayList<>();
+    List<HashMap<String,String>> photos = new ArrayList<>();
 
     public StoreModel(){}
 
@@ -201,7 +201,7 @@ public class StoreModel implements Serializable {
     public void setPhotos(JSONArray p) throws JSONException{
         for (int i=0; i<p.length();i++){
 
-            Map<String,String> photoItem = new HashMap<>();
+            HashMap<String,String> photoItem = new HashMap<>();
             JSONObject item = p.getJSONObject(i);
 
             photoItem.put(KEY_PHOTO_URL,String.valueOf(item.get(KEY_PHOTO_URL)));
@@ -211,7 +211,7 @@ public class StoreModel implements Serializable {
     }
 
     public void setPhotos(JSONObject photo) throws JSONException {
-        Map<String,String> item = new HashMap<>();
+        HashMap<String,String> item = new HashMap<>();
         item.put(KEY_PHOTO_URL,String.valueOf(photo.get(KEY_PHOTO_URL)));
         item.put(KEY_PHOTO_DESCRIPTION,String.valueOf(photo.get(KEY_PHOTO_DESCRIPTION)));
         photos.add(item);
@@ -247,7 +247,7 @@ public class StoreModel implements Serializable {
         this.telp = telp;
     }
 
-    public List<Map<String,String>> getPhotos() {
+    public List<HashMap<String,String>> getPhotos() {
         return this.photos;
     }
 

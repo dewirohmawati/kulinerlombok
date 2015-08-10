@@ -10,7 +10,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,30 +27,19 @@ import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
  */
 public class GalleryFragment extends Fragment {
 
-    public static final String STORE_GALLERY_DATA = "store";
+    public static final String GALLERY_FRAGMENT_STORE_PHOTO = "store_photo";
 
-    private StoreModel store;
-    private List<Map<String,String>> photos;
-    private ViewPager mPager;
-    private PagerAdapter mAdapter;
-
-    public static GalleryFragment newInstance(StoreModel store){
-
-        Bundle args = new Bundle();
-        args.putSerializable(STORE_GALLERY_DATA, store);
-
-        GalleryFragment g = new GalleryFragment();
-        g.setArguments(args);
-
-        return g;
-    }
+    private HashMap<String,String> photo;
+    private ImageView galleryPhoto;
+    private TextView photoDescription;
 
     @Override
-    public void onAttach(Activity activity){
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         Bundle args = getArguments();
         if(args != null){
-            store = (StoreModel) args.getSerializable(STORE_GALLERY_DATA);
-            photos = store.getPhotos();
+            photo = (HashMap) args.getSerializable(GALLERY_FRAGMENT_STORE_PHOTO);
         }
     }
 
@@ -53,30 +47,17 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_gallery,container,false);
+        View v = inflater.inflate(R.layout.activity_gallery,container,false);
 
-        mPager = (ViewPager) v.findViewById(R.id.view_pager);
-        mAdapter = new GalleryAdapter(getActivity().getSupportFragmentManager(),photos.size());
-        mPager.setAdapter(mAdapter);
+        galleryPhoto = (ImageView) v.findViewById(R.id.gallery_photo);
+        photoDescription = (TextView) v.findViewById(R.id.gallery_description);
+
+        Picasso.with(getActivity()).load(Integer.parseInt(photo.get(StoreModel.KEY_PHOTO_URL)))
+                .resize(800,1080)
+                .into(galleryPhoto);
+        photoDescription.setText(photo.get(StoreModel.KEY_PHOTO_DESCRIPTION));
 
         return v;
-    }
-
-    private class GalleryAdapter extends FragmentStatePagerAdapter {
-
-        public GalleryAdapter(FragmentManager fm, int photoCount) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return new GalleryFragment();
-        }
-
-        @Override
-        public int getCount() {
-            return photos.size();
-        }
     }
 
 }
