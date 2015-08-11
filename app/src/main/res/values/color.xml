@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="actionbar_color">#99c6111b</color>
+    <color name="actionbar_color">#d50000</color>
     <color name="theme_color">#ffc6111b</color>
     <color name="theme_color_dark">#8a0f19</color>
     <color name="theme_background">#efefef</color>

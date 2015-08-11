@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="kl.app.syamsul.com.kulinerlombok.activity.DetailActivity">
+    <item
+        android:id="@+id/action_search"
+        android:title="@null"
+        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+</menu>

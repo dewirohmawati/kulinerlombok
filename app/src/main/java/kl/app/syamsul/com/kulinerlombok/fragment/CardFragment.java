@@ -3,9 +3,11 @@ package kl.app.syamsul.com.kulinerlombok.fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +21,19 @@ import java.util.List;
 import java.util.Map;
 
 import kl.app.syamsul.com.kulinerlombok.R;
+import kl.app.syamsul.com.kulinerlombok.activity.HomeActivity;
 import kl.app.syamsul.com.kulinerlombok.adapter.CardAdapter;
 import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
 
-public class CardFragment extends Fragment  {
+public class CardFragment extends Fragment {
 
     private List<StoreModel> stores;
     private RecyclerView mRecycler;
     private CardAdapter mAdapter;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
+
+    private long firstItemId;
 
     public static CardFragment newInstance() {
 
@@ -52,6 +57,7 @@ public class CardFragment extends Fragment  {
          */
         mRecycler = new RecyclerView(getActivity());
         mAdapter = new CardAdapter(getActivity(), stores);
+
     }
 
     @Override

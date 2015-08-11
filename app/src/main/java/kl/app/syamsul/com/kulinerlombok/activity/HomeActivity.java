@@ -1,8 +1,11 @@
 package kl.app.syamsul.com.kulinerlombok.activity;
 
-import android.app.DialogFragment;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +15,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,7 +34,7 @@ public class HomeActivity extends AppCompatActivity implements ListView.OnItemCl
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView mNavigationView;
-    private Toolbar mToolbar;
+    public Toolbar mToolbar;
     private ActionBar mActionBar;
 
     @Override
@@ -56,6 +61,25 @@ public class HomeActivity extends AppCompatActivity implements ListView.OnItemCl
     protected void onResume() {
         super.onResume();
         mToolbar.setBackgroundColor(getResources().getColor(R.color.theme_color));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_home,menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchManager searchManager = (SearchManager) HomeActivity.this.getSystemService(Context.SEARCH_SERVICE);
+
+        SearchView searchView = null;
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(HomeActivity.this.getComponentName()));
+        }
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -92,9 +116,12 @@ public class HomeActivity extends AppCompatActivity implements ListView.OnItemCl
 
     private void initToolbar(){
         mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+
+
         setSupportActionBar(mToolbar);
 
         mActionBar = getSupportActionBar();
+        mActionBar.setBackgroundDrawable(new ColorDrawable(Color.argb(0, 255, 255, 255)));
 
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setHomeButtonEnabled(true);

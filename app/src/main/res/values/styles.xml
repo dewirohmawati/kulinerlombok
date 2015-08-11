@@ -8,4 +8,18 @@
         <item name="android:windowBackground">@color/theme_background</item>
     </style>
 
+    <style name="ActionBArTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyActionBarTheme" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/theme_color</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="android:theme">@style/Theme.AppCompat</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
 </resources>
