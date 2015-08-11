@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.manuelpeinado.fadingactionbar.view.ObservableScrollView;
 import com.manuelpeinado.fadingactionbar.view.OnScrollChangedCallback;
@@ -25,10 +29,11 @@ import kl.app.syamsul.com.kulinerlombok.activity.GalleryActivity;
 import kl.app.syamsul.com.kulinerlombok.model.StoreModel;
 
 
-public class DetailFragment extends Fragment implements OnScrollChangedCallback, View.OnClickListener {
+public class DetailFragment extends Fragment implements OnScrollChangedCallback, View.OnClickListener, ActionDialog.ActionDialogListener {
 
     public static final String ARG_STORE_DATA = "store";
 
+    private ImageButton mFABButton;
     private StoreModel store;
     private View mHeader;
     private Toolbar mToolbar;
@@ -78,6 +83,9 @@ public class DetailFragment extends Fragment implements OnScrollChangedCallback,
         holder.ratingContainer.get(StoreModel.KEY_RATING_TASTE).addView(generateRatingView(rating.get(StoreModel.KEY_RATING_TASTE)));
 
         mHeader = holder.storeImage;
+        mFABButton = holder.fabButton;
+
+        mFABButton.setOnClickListener(this);
 
         ObservableScrollView o = (ObservableScrollView) v.findViewById(R.id.observable);
         o.setOnScrollChangedCallback(this);
@@ -99,13 +107,35 @@ public class DetailFragment extends Fragment implements OnScrollChangedCallback,
 
     @Override
     public void onClick(View view) {
-        Intent in = new Intent(getActivity(),GalleryActivity.class);
-        in.putExtra(GalleryActivity.GALLERY_ACTIVITY_DATA,store);
-        startActivity(in);
+
+        switch (view.getId()){
+            case R.id.fab_comment_button:
+                ActionDialog addComment = ActionDialog.newInstance(R.layout.add_comment_dialog, R.string.add_comment_title, R.string.add_comment_positive_button, R.string.add_comment_negative_button);
+                addComment.setTargetFragment(this,0);
+                addComment.show(getFragmentManager(),"testing");
+                break;
+            case R.id.store_image:
+                Intent in = new Intent(getActivity(),GalleryActivity.class);
+                in.putExtra(GalleryActivity.GALLERY_ACTIVITY_DATA, store);
+                startActivity(in);
+                break;
+        }
+
+    }
+
+    @Override
+    public void onDialogConfirm() {
+        Toast.makeText(getActivity(),"Komentar telah dikirim", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDialogCancel() {
+
     }
 
     private class Holder {
 
+        public ImageButton fabButton;
         public ImageView storeImage;
         public TextView storeName;
         public TextView storeAddress;
@@ -117,6 +147,7 @@ public class DetailFragment extends Fragment implements OnScrollChangedCallback,
             storeName = (TextView) v.findViewById(R.id.store_name);
             storeAddress = (TextView) v.findViewById(R.id.store_address);
             storeDescription = (TextView) v.findViewById(R.id.store_description);
+            fabButton = (ImageButton) v.findViewById(R.id.fab_comment_button);
 
             ratingContainer = new HashMap<>();
 
@@ -135,8 +166,23 @@ public class DetailFragment extends Fragment implements OnScrollChangedCallback,
         if (scrollPosition > 0 && headerHeight > 0)
             ratio = (float) Math.min(Math.max(scrollPosition, 0), headerHeight) / headerHeight;
 
+        moveFABButton(ratio);
         updateActionBarTransparency(ratio);
         generateParallaxEffect(scrollPosition);
+    }
+
+    private void moveFABButton(float pos){
+        Log.i("scr", "pos " + pos);
+
+        if(pos > 0.7){
+            if(mFABButton.getVisibility() == View.VISIBLE ) {
+                mFABButton.setVisibility(View.GONE);
+            }
+        } else {
+            if(mFABButton.getVisibility() == View.GONE) {
+                mFABButton.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void generateParallaxEffect(int scrollPosition){

@@ -23,6 +23,10 @@
     <string name="rating_price_range">Rentang Harga</string>
     <string name="rating_favorite_menu">Menu Favorit</string>
 
+    <string name="add_comment_title">Beri Komentar</string>
+    <string name="add_comment_positive_button">Kirim</string>
+    <string name="add_comment_negative_button">Batal</string>
+
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 tempor incididunt ut labore et dolore magna aliqua. \n\nUt enim ad minim veniam,
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo

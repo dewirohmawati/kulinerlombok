@@ -1,156 +1,169 @@
-<com.manuelpeinado.fadingactionbar.view.ObservableScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/observable"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
-        android:orientation="vertical"
+    <com.manuelpeinado.fadingactionbar.view.ObservableScrollView
+        android:id="@+id/observable"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/store_image"
-                android:src="@drawable/lesehan_purnama"
-                android:layout_gravity="top"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:contentDescription="@null" />
-            <include layout="@layout/detail_button" />
-        </FrameLayout>
-
         <LinearLayout
             android:orientation="vertical"
-            android:background="#FFF"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:paddingRight="10dp"
-            android:paddingEnd="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- Store name and address container -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lesehan Gading"
-                android:id="@+id/store_name"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Jl Pejanggik Mataram"
-                android:id="@+id/store_address"
-                android:layout_marginBottom="15dp" />
-
-            <include layout="@layout/separator_line" />
-
-            <!-- Ratings -->
-            <TableLayout
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rating_item_service" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/store_image"
+                    android:src="@drawable/lesehan_purnama"
+                    android:layout_gravity="top"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@null" />
+                <include layout="@layout/detail_button" />
+            </FrameLayout>
 
-                    <FrameLayout
-                        android:id="@+id/rating_service_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rating_item_taste" />
-                    <FrameLayout
-                        android:id="@+id/rating_taste_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rating_item_cleanness" />
-
-                    <FrameLayout
-                        android:id="@+id/rating_cleanness_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginBottom="15dp"
-                        android:text="@string/rating_item_comfort" />
-
-                    <FrameLayout
-                        android:id="@+id/rating_comfort_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rating_price_range" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="&lt; IDR 50k"
-                        android:id="@+id/rating_price_range" />
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rating_favorite_menu" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pelecing Ayam"
-                        android:id="@+id/rating_favorite_menu" />
-                </TableRow>
-                <TableRow>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/operation_time" />
-
-                    <TextView
-                        android:text="10.00 - 16.00 WITA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/operation_time" />
-                </TableRow>
-            </TableLayout>
-
-            <include layout="@layout/separator_line" />
-            <!-- Store Description -->
-            <TextView
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="#FFF"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/lorem"
-                android:id="@+id/store_description"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp" />
+                android:layout_height="match_parent">
+
+                <!-- Store name and address container -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lesehan Gading"
+                    android:id="@+id/store_name"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jl Pejanggik Mataram"
+                    android:id="@+id/store_address"
+                    android:layout_marginBottom="15dp" />
+
+                <include layout="@layout/separator_line" />
+
+                <!-- Ratings -->
+                <TableLayout
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rating_item_service" />
+
+                        <FrameLayout
+                            android:id="@+id/rating_service_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rating_item_taste" />
+                        <FrameLayout
+                            android:id="@+id/rating_taste_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rating_item_cleanness" />
+
+                        <FrameLayout
+                            android:id="@+id/rating_cleanness_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginBottom="15dp"
+                            android:text="@string/rating_item_comfort" />
+
+                        <FrameLayout
+                            android:id="@+id/rating_comfort_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rating_price_range" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="&lt; IDR 50k"
+                            android:id="@+id/rating_price_range" />
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rating_favorite_menu" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pelecing Ayam"
+                            android:id="@+id/rating_favorite_menu" />
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/operation_time" />
+
+                        <TextView
+                            android:text="10.00 - 16.00 WITA"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/operation_time" />
+                    </TableRow>
+                </TableLayout>
+
+                <include layout="@layout/separator_line" />
+                <!-- Store Description -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/lorem"
+                    android:id="@+id/store_description"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</com.manuelpeinado.fadingactionbar.view.ObservableScrollView>
+    </com.manuelpeinado.fadingactionbar.view.ObservableScrollView>
+    <ImageButton
+        android:id="@+id/fab_comment_button"
+        android:background="@android:color/transparent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/torrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp" />
+</FrameLayout>

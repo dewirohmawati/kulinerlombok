@@ -4,9 +4,7 @@
         <translate android:duration="500"
             android:interpolator="@android:anim/anticipate_overshoot_interpolator"
             android:fromYDelta="0"
-            android:toXDelta="100" />
-        <alpha android:duration="500"
-            android:fromAlpha="100"
-            android:toAlpha="0"/>
+            android:fillAfter="true"
+            android:toYDelta="100" />
     </set>
 </set>

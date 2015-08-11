@@ -3,6 +3,7 @@
     <set>
         <translate android:duration="800"
             android:fromYDelta="50%p"
+            android:fillAfter="true"
             android:toYDelta="0%p" />
         <rotate android:duration="800"
             android:fromDegrees="60"
